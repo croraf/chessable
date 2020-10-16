@@ -14,6 +14,7 @@ const Piece = ({ pieceData }: { pieceData: PieceData }) => {
       cursor: 'pointer',
       color: pieceData.color === PieceColor.WHITE ? 'white' : 'black',
       fontWeight: 'bold',
+      userSelect: 'none',
     }}>
       {pieceData.kind.toUpperCase()}
     </div>
