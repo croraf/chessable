@@ -1,7 +1,7 @@
-import { PieceColor, PieceData, PieceKind } from "../types/basicTypes";
+import { PieceColor, Piece, PieceKind, SquareLocation } from "../types/basicTypes";
 
-const parseFenRank = (rankInput: string): (PieceData | null)[] => {
-  let parsedRank: (PieceData | null)[] = [];
+const parseFenRank = (rankInput: string): (Piece | null)[] => {
+  let parsedRank: (Piece | null)[] = [];
   for (let index = 0; index < rankInput.length; index++) {
     const char = rankInput[index];
     if (Object.keys(PieceKind).includes(char.toUpperCase())) {
@@ -26,12 +26,14 @@ const parseFenRank = (rankInput: string): (PieceData | null)[] => {
   return parsedRank;
 };
 
-const parseFenBoard = (boardFenInput: string): (PieceData | null)[][] => {
+
+const parseFenBoard = (boardFenInput: string): (Piece | null)[][] => {
   const rankInputs = boardFenInput.split('/');
   return rankInputs.map(rankInput => parseFenRank(rankInput));
 };
 
-const addWhitePawnToBoard = (boardSetup: (PieceData | null)[][]): (PieceData | null)[][] => {
+
+const addWhitePawnToBoard = (boardSetup: (Piece | null)[][]): (Piece | null)[][] => {
   let randomFileIndex: number;
   let randomRankIndex: number;
 
@@ -53,4 +55,55 @@ const addWhitePawnToBoard = (boardSetup: (PieceData | null)[][]): (PieceData | n
   return boardSetupCopy;
 }
 
-export { parseFenBoard, addWhitePawnToBoard };
+const checkSelectable = ({ rankIndex, fileIndex }: SquareLocation, boardData: (Piece | null)[][]): boolean => {
+  const piece = boardData[rankIndex][fileIndex];
+  if (piece?.color === PieceColor.WHITE && piece?.kind === PieceKind.P) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const checkRightClickable = ({ rankIndex, fileIndex }: SquareLocation, boardData: (Piece | null)[][], selectedPieceLocation: SquareLocation | null): boolean => {
+  if (selectedPieceLocation === null) {
+    return false;
+  }
+
+  if (
+    rankIndex === selectedPieceLocation.rankIndex + 1
+    && fileIndex === selectedPieceLocation.fileIndex
+    && boardData[rankIndex][fileIndex] === null
+  ) {
+    // the square immediately ahead
+    return true;
+  } else if (
+    rankIndex === selectedPieceLocation.rankIndex + 1
+    && fileIndex === selectedPieceLocation.fileIndex - 1
+    && boardData[rankIndex][fileIndex]?.color === PieceColor.BLACK
+  ) {
+    // diagonal left
+    return true;
+  } else if (
+    rankIndex === selectedPieceLocation.rankIndex + 1
+    && fileIndex === selectedPieceLocation.fileIndex + 1
+    && boardData[rankIndex][fileIndex]?.color === PieceColor.BLACK
+  ) {
+    // diagonal right 
+    return true;
+  } else if (
+    selectedPieceLocation.rankIndex === 1
+    && rankIndex === 3
+    && fileIndex === selectedPieceLocation.fileIndex
+    && boardData[rankIndex][fileIndex] === null
+    && boardData[rankIndex - 1][fileIndex] === null
+  ) {
+    // two squares ahead and second rank
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+
+export { parseFenBoard, addWhitePawnToBoard, checkSelectable, checkRightClickable, };

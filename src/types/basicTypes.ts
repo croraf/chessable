@@ -10,12 +10,12 @@ export enum PieceKind {
   N = 'N',
   B = 'B',
   P = 'P',
-/*   k = 'k',
+  k = 'k',
   q = 'q',
   r = 'r',
   n = 'n',
   b = 'b',
-  p = 'p', */
+  p = 'p',
 }
 
 export enum PieceColor {
@@ -23,7 +23,12 @@ export enum PieceColor {
   BLACK,
 }
 
-export interface PieceData {
+export interface Piece {
   kind: PieceKind,
   color: PieceColor,
+}
+
+export interface SquareLocation {
+  rankIndex: number,
+  fileIndex: number,
 }

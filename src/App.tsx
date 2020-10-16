@@ -1,42 +1,25 @@
-import React, { useState } from 'react';
-import Chessboard from './components/Chessboard';
-import { BoardOrientation } from './types/basicTypes';
-import { Button } from '@material-ui/core';
-import { addWhitePawnToBoard, parseFenBoard } from './modules/utils';
+import React from 'react';
+import Home from './pages/Home';
+import { makeStyles } from '@material-ui/core';
 
-const boardFenInput = '8/2p5/7p/8/3KK3/8/7Q/8';
-//const boardFenInput = '8/2p5/8/8/8/8/8/8';
+const useStyles = makeStyles({
+  '@global': {
+    body: {
+      margin: 0,
+      'font-family': "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
+      "-webkit-font-smoothing": 'antialiased',
+      "-moz-osx-font-smoothing": 'grayscale',
+    },
+  },
+});
 
 function App() {
-  const [boardOrientation, setBoardOrientation] = useState(BoardOrientation.WHITE);
-  const [boardSetup, setBoardSetup] = useState(parseFenBoard(boardFenInput));
+  useStyles();
 
+  // React Router can be added here
   return (
-    <div className="App" style={{ margin: '2rem 0rem', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
-      <Chessboard
-        boardOrientation={boardOrientation}
-        boardSetup={boardSetup}
-      />
-      <Button
-        onClick={e => setBoardOrientation(
-          boardOrientation === BoardOrientation.WHITE ? BoardOrientation.BLACK : BoardOrientation.WHITE
-        )}
-        style={{ margin: '1rem', }}
-      >
-        Rotate
-      </Button>
-      <Button
-        onClick={e => setBoardSetup(addWhitePawnToBoard(boardSetup))}
-        style={{ margin: '1rem', }}
-      >
-        Spawn a white pawn
-      </Button>
-      <Button
-        onClick={e => setBoardSetup(parseFenBoard(boardFenInput))}
-        style={{ margin: '1rem', }}
-      >
-        Reset
-      </Button>
+    <div style={{ width: '100%', }}>
+      <Home />
     </div>
   );
 }
