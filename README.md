@@ -8,6 +8,7 @@
 - Axis labels are not implemented.
 - En-passant is not implemented.
 - Responsiveness is not implemented.
+- Pieces' icons/images are not implemented.
 
 ## Time spent
 
