@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { BoardOrientation, Piece, SquareLocation } from '../types/basicTypes';
 import PieceHolder from './PieceHolder';
 import cx from 'classnames';
 import { checkRightClickable, checkSelectable } from '../modules/utils';
-// Friday 15:15 - 
 
 
 const useStyles = makeStyles({
@@ -34,36 +33,36 @@ const useStyles = makeStyles({
   squareWhite: {
     backgroundColor: 'rgba(233, 212, 96, 0.8)',
   },
-  squareHighlighted: {
+  squareSelected: {
     backgroundColor: 'gold',
-  }
+  },
+  squareMovable: {
+    backgroundColor: 'rgba(255, 100, 0, 0.7)',
+  },
 });
+
 
 const Chessboard = ({
   boardData,
+  selectedPieceLocation,
+  onSelectablePieceClick,
+  onPieceMove,
   boardOrientation = BoardOrientation.WHITE,
 }: {
   boardData: (Piece | null)[][],
+  selectedPieceLocation: SquareLocation | null,
+  onSelectablePieceClick: (clickedLocation: SquareLocation) => void,
+  onPieceMove: (moveTargetLocation: SquareLocation) => void,
   boardOrientation?: BoardOrientation,
 }) => {
   const classes = useStyles();
-  const [selectedPieceLocation, setSelectedPieceLocation] = useState(null as (SquareLocation | null));
-
-  const onSquareClick = (clickedLocation: SquareLocation) => {
-    if (selectedPieceLocation?.rankIndex === clickedLocation.rankIndex
-      && selectedPieceLocation?.fileIndex === clickedLocation.fileIndex) {
-      setSelectedPieceLocation(null);
-    } else {
-      setSelectedPieceLocation(clickedLocation);
-    }
-  };
 
   return (
     <div
       className={classes.root}
       style={{
         transform: `
-          rotateX(${boardOrientation === BoardOrientation.WHITE ? 0 : 180}deg)
+          rotateX(${boardOrientation === BoardOrientation.WHITE ? 180 : 0}deg)
           rotateY(${boardOrientation === BoardOrientation.WHITE ? 0 : 180}deg)
         `
       }}
@@ -74,25 +73,26 @@ const Chessboard = ({
           <div key={rankIndex} className={classes.rank}>
             {rank.map((square, fileIndex) => {
               const isSelectable = checkSelectable({ rankIndex, fileIndex }, boardData);
-              const isRightClickable = checkRightClickable({ rankIndex, fileIndex }, boardData, selectedPieceLocation);
+              const isMoveTarget = checkRightClickable({ rankIndex, fileIndex }, boardData, selectedPieceLocation);
 
               return (
                 <div
                   key={fileIndex}
                   className={cx(
                     classes.square,
-                    ((rankIndex + fileIndex) % 2) ? classes.squareBlack : classes.squareWhite,
-                    selectedPieceLocation?.rankIndex === rankIndex && selectedPieceLocation?.fileIndex === fileIndex && classes.squareHighlighted,
+                    ((rankIndex + fileIndex) % 2) ? classes.squareWhite : classes.squareBlack,
+                    selectedPieceLocation?.rankIndex === rankIndex && selectedPieceLocation?.fileIndex === fileIndex && classes.squareSelected,
+                    isMoveTarget && classes.squareMovable,
                   )}
                   style={{
                     transform: `
-                    rotateX(${boardOrientation === BoardOrientation.WHITE ? 0 : 180}deg)
+                    rotateX(${boardOrientation === BoardOrientation.WHITE ? 180 : 0}deg)
                     rotateY(${boardOrientation === BoardOrientation.WHITE ? 0 : 180}deg)
                   `,
                     cursor: isSelectable ? 'pointer' : 'initial',
                   }}
-                  onClick={() => { isSelectable && onSquareClick({ rankIndex, fileIndex }) }}
-                  onContextMenu={() => { isRightClickable && console.log('move')}}
+                  onClick={() => { isSelectable && onSelectablePieceClick({ rankIndex, fileIndex }) }}
+                  onContextMenu={() => { isMoveTarget && onPieceMove({ rankIndex, fileIndex }) }}
                 >
                   {/* [{8 - rankIndex}, {fileIndex + 1}] */}
                   {square !== null && <PieceHolder pieceData={square} />}

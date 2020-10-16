@@ -27,13 +27,13 @@ const parseFenRank = (rankInput: string): (Piece | null)[] => {
 };
 
 
-const parseFenBoard = (boardFenInput: string): (Piece | null)[][] => {
+export const parseFenBoard = (boardFenInput: string): (Piece | null)[][] => {
   const rankInputs = boardFenInput.split('/');
-  return rankInputs.map(rankInput => parseFenRank(rankInput));
+  return rankInputs.map(rankInput => parseFenRank(rankInput)).reverse();
 };
 
 
-const addWhitePawnToBoard = (boardSetup: (Piece | null)[][]): (Piece | null)[][] => {
+export const addWhitePawnToBoard = (boardSetup: (Piece | null)[][]): (Piece | null)[][] => {
   let randomFileIndex: number;
   let randomRankIndex: number;
 
@@ -55,7 +55,7 @@ const addWhitePawnToBoard = (boardSetup: (Piece | null)[][]): (Piece | null)[][]
   return boardSetupCopy;
 }
 
-const checkSelectable = ({ rankIndex, fileIndex }: SquareLocation, boardData: (Piece | null)[][]): boolean => {
+export const checkSelectable = ({ rankIndex, fileIndex }: SquareLocation, boardData: (Piece | null)[][]): boolean => {
   const piece = boardData[rankIndex][fileIndex];
   if (piece?.color === PieceColor.WHITE && piece?.kind === PieceKind.P) {
     return true;
@@ -64,11 +64,12 @@ const checkSelectable = ({ rankIndex, fileIndex }: SquareLocation, boardData: (P
   }
 }
 
-const checkRightClickable = ({ rankIndex, fileIndex }: SquareLocation, boardData: (Piece | null)[][], selectedPieceLocation: SquareLocation | null): boolean => {
+export const checkRightClickable = ({ rankIndex, fileIndex }: SquareLocation, boardData: (Piece | null)[][], selectedPieceLocation: SquareLocation | null): boolean => {
   if (selectedPieceLocation === null) {
     return false;
   }
 
+  //TODO: en-passant not implemented
   if (
     rankIndex === selectedPieceLocation.rankIndex + 1
     && fileIndex === selectedPieceLocation.fileIndex
@@ -105,5 +106,11 @@ const checkRightClickable = ({ rankIndex, fileIndex }: SquareLocation, boardData
 
 }
 
+export const calculateBoardDataAfterMove = (boardData: (Piece | null)[][], selectedPieceLocation: SquareLocation, moveTarget: SquareLocation): (Piece | null)[][] => {
+  const boardDataDeepCopy = JSON.parse(JSON.stringify(boardData)) as (Piece | null)[][];
 
-export { parseFenBoard, addWhitePawnToBoard, checkSelectable, checkRightClickable, };
+  boardDataDeepCopy[moveTarget.rankIndex][moveTarget.fileIndex] = boardData[selectedPieceLocation.rankIndex][selectedPieceLocation.fileIndex];
+  boardDataDeepCopy[selectedPieceLocation.rankIndex][selectedPieceLocation.fileIndex] = null;
+
+  return boardDataDeepCopy;
+};
