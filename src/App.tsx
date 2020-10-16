@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Chessboard from './components/Chessboard';
+import { BoardOrientation } from './types/basicTypes';
+import { Button } from '@material-ui/core';
+
+const boardSetup = '8/2p5/8/8/8/8/8/8';
 
 function App() {
+  const [boardOrientation, setBoardOrientation] = useState(BoardOrientation.WHITE);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ margin: '2rem 0rem', width: '100%' }}>
+      <Chessboard boardOrientation={boardOrientation} />
+      <Button
+        onClick={e => setBoardOrientation(
+          boardOrientation === BoardOrientation.WHITE ? BoardOrientation.BLACK : BoardOrientation.WHITE
+        )}
+        style={{ margin: '2rem', }}
+      >
+        Rotate
+      </Button>
     </div>
   );
 }
