@@ -8,7 +8,7 @@ const parseFenRank = (rankInput: string): (PieceKind | null)[] => {
       parsedRank.push(char as PieceKind);
     } else if (char >= '1' && char <= '8') {
       const newArray: null[] = new Array(parseInt(char)).fill(null);
-      parsedRank.concat(newArray);
+      parsedRank.push(...newArray);
     } else {
       throw new Error('Unexpected FEN board input');
     }
@@ -16,8 +16,8 @@ const parseFenRank = (rankInput: string): (PieceKind | null)[] => {
   return parsedRank;
 };
 
-const parseFenBoard = (input: string): (PieceKind | null)[][] => {
-  const rankInputs = input.split('/');
+const parseFenBoard = (boardFenInput: string): (PieceKind | null)[][] => {
+  const rankInputs = boardFenInput.split('/');
   return rankInputs.map(rankInput => parseFenRank(rankInput));
 };
 

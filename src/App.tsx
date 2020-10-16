@@ -4,12 +4,12 @@ import { BoardOrientation } from './types/basicTypes';
 import { Button } from '@material-ui/core';
 import { parseFenBoard } from './modules/utils';
 
-const boardFenSetup = '8/2p5/8/8/8/8/8/8';
+const boardFenInput = '8/2p5/8/8/8/8/8/8';
 
 function App() {
   const [boardOrientation, setBoardOrientation] = useState(BoardOrientation.WHITE);
 
-  const parsedBoardSetup = parseFenBoard(boardFenSetup);
+  const parsedBoardSetup = parseFenBoard(boardFenInput);
 
   return (
     <div className="App" style={{ margin: '2rem 0rem', width: '100%' }}>
