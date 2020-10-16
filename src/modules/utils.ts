@@ -1,12 +1,17 @@
-import { PieceKind } from "../types/basicTypes";
+import { PieceColor, PieceData, PieceKind } from "../types/basicTypes";
 
-const parseFenRank = (rankInput: string): (PieceKind | null)[] => {
-  let parsedRank: (PieceKind | null)[] = [];
+const parseFenRank = (rankInput: string): (PieceData | null)[] => {
+  let parsedRank: (PieceData | null)[] = [];
   for (let index = 0; index < rankInput.length; index++) {
     const char = rankInput[index];
-    if (Object.keys(PieceKind).includes(char)) {
-      parsedRank.push(char as PieceKind);
+    if (Object.keys(PieceKind).includes(char.toUpperCase())) {
+      // if it is a piece
+      parsedRank.push({
+        kind: char as PieceKind,
+        color: char.toUpperCase() === char ? PieceColor.WHITE : PieceColor.BLACK,
+      });
     } else if (char >= '1' && char <= '8') {
+      // if it is a sequence of empty squares
       const newArray: null[] = new Array(parseInt(char)).fill(null);
       parsedRank.push(...newArray);
     } else {
@@ -21,12 +26,12 @@ const parseFenRank = (rankInput: string): (PieceKind | null)[] => {
   return parsedRank;
 };
 
-const parseFenBoard = (boardFenInput: string): (PieceKind | null)[][] => {
+const parseFenBoard = (boardFenInput: string): (PieceData | null)[][] => {
   const rankInputs = boardFenInput.split('/');
   return rankInputs.map(rankInput => parseFenRank(rankInput));
 };
 
-const addWhitePawnToBoard = (boardSetup: (PieceKind | null)[][]): (PieceKind | null)[][] => {
+const addWhitePawnToBoard = (boardSetup: (PieceData | null)[][]): (PieceData | null)[][] => {
   let randomFileIndex: number;
   let randomRankIndex: number;
 
@@ -38,8 +43,11 @@ const addWhitePawnToBoard = (boardSetup: (PieceKind | null)[][]): (PieceKind | n
   } while (boardSetup[randomRankIndex][randomFileIndex] !== null)
 
   const rankCopy = [...boardSetup[randomRankIndex]];
-  rankCopy[randomFileIndex] = PieceKind.P;
-  
+  rankCopy[randomFileIndex] = {
+    kind: PieceKind.P,
+    color: PieceColor.WHITE,
+  };
+
   const boardSetupCopy = [...boardSetup];
   boardSetupCopy[randomRankIndex] = rankCopy;
   return boardSetupCopy;

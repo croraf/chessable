@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { BoardOrientation, PieceKind } from '../types/basicTypes';
+import { BoardOrientation, PieceData } from '../types/basicTypes';
 import Piece from './Piece';
 
 // Friday 15:15 - 
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     backgroundColor: 'rgba(0, 20, 0, 0.6)',
   },
   white: {
-    backgroundColor: 'rgba(233, 212, 96, 0.4)',
+    backgroundColor: 'rgba(233, 212, 96, 0.8)',
   }
 });
 
@@ -39,7 +39,7 @@ const Chessboard = ({
   boardSetup,
   boardOrientation = BoardOrientation.WHITE,
 }: { 
-  boardSetup: (PieceKind | null)[][],
+  boardSetup: (PieceData | null)[][],
   boardOrientation?: BoardOrientation,
 }) => {
   const classes = useStyles();
@@ -69,7 +69,7 @@ const Chessboard = ({
                 }}
               >
                 {/* [{8 - rankIndex}, {fileIndex + 1}] */}
-                {square !== null && <Piece pieceKind={square} />}
+                {square !== null && <Piece pieceData={square} />}
               </div>
             ))}
           </div>
