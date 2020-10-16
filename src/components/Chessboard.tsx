@@ -44,19 +44,6 @@ const Chessboard = ({
 }) => {
   const classes = useStyles();
 
-  console.log(boardSetup[0].length);
-
-  const data: (PieceKind | null)[][] = [
-    [null, null, null, null, null, null, null, null,],
-    [null, null, null, null, null, null, null, null,],
-    [null, null, null, null, null, null, null, null,],
-    [null, null, null, null, null, null, null, null,],
-    [null, null, null, null, PieceKind.K, null, null, null,],
-    [null, null, null, null, null, null, null, null,],
-    [null, null, null, null, null, null, null, null,],
-    [null, null, null, null, null, null, null, null,],
-  ];
-
   return (
     <div
       className={classes.root}

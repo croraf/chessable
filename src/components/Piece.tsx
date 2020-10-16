@@ -5,17 +5,6 @@ import Queen from './pieces/Queen';
 
 const Piece = ({ pieceKind }: { pieceKind: PieceKind }) => {
 
-  let pieceElement: string | null;
-
-  switch (pieceKind) {
-    case PieceKind.K:
-      pieceElement = 'K';
-      break;
-    default:
-      pieceElement = null;
-      break;
-  }
-
   return (
     <div style={{
       width: '50%',
@@ -26,7 +15,7 @@ const Piece = ({ pieceKind }: { pieceKind: PieceKind }) => {
       alignItems: 'center',
       fontSize: '20px',
       cursor: 'pointer',
-    }}>{pieceElement}</div>
+    }}>{pieceKind}</div>
   );
 };
 
