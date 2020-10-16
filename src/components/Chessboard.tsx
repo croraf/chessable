@@ -35,8 +35,16 @@ const useStyles = makeStyles({
   }
 });
 
-const Chessboard = ({ boardOrientation = BoardOrientation.WHITE }: { boardOrientation?: BoardOrientation }) => {
+const Chessboard = ({ 
+  boardSetup,
+  boardOrientation = BoardOrientation.WHITE,
+}: { 
+  boardSetup: (PieceKind | null)[][],
+  boardOrientation?: BoardOrientation,
+}) => {
   const classes = useStyles();
+
+  console.log(boardSetup[0].length);
 
   const data: (PieceKind | null)[][] = [
     [null, null, null, null, null, null, null, null,],
@@ -60,7 +68,7 @@ const Chessboard = ({ boardOrientation = BoardOrientation.WHITE }: { boardOrient
       }}
     >
       {
-        data.map((rank, rankIndex) => (
+        boardSetup.map((rank, rankIndex) => (
           <div key={rankIndex} className={classes.rank}>
             {rank.map((square, fileIndex) => (
               <div
