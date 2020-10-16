@@ -4,9 +4,8 @@ import { BoardOrientation, SquareLocation } from '../types/basicTypes';
 import { Button } from '@material-ui/core';
 import { addWhitePawnToBoard, calculateBoardDataAfterMove, parseFenBoard } from '../modules/utils';
 
-// Friday 15:15 - 
 
-//const boardFenInput = '8/2p5/7p/8/3KK3/8/7Q/8';
+// const boardFenInput = '8/2p5/7p/8/3KK3/8/7Q/8';
 const boardFenInput = '8/2p5/8/8/8/8/8/8';
 
 
@@ -25,8 +24,10 @@ function Home() {
   };
 
   const onPieceMove = (moveTarget: SquareLocation) => {
+    if (selectedPieceLocation === null) { return; }
+
     setBoardData(
-      calculateBoardDataAfterMove(boardData, selectedPieceLocation as SquareLocation, moveTarget)
+      calculateBoardDataAfterMove(boardData, selectedPieceLocation, moveTarget)
     );
     setSelectedPieceLocation(null);
   };

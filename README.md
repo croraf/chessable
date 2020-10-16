@@ -1,6 +1,18 @@
+## User guide
+
+- You can specify a custom position using hardcoded "boardFenInput" variable in "src/pages/Home.tsx" file.  
+- Left click on any white pawn to select it. Only white pawns can be selected.
+- Selected piece will be highlighted in gold and can be moved on squares highlighted in orange.
+- The view is originally from the white's perspective. Can be rotated into black's perspective and back.
+- Perspective indication is not implemented.
+- Axis labels are not implemented.
+- En-passant is not implemented.
+- Responsiveness is not implemented.
+
 ## Time spent
 
-Around 10h.
+Around 9h.
+
 
 
 
