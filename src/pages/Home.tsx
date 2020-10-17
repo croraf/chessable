@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Chessboard from '../components/Chessboard';
 import { BoardOrientation, SquareLocation } from '../types/basicTypes';
 import { Button } from '@material-ui/core';
-import { addWhitePawnToBoard, calculateBoardDataAfterMove, parseFenBoard } from '../modules/utils';
+import { addWhitePawnToBoard, calculateBoardDataAfterMove, checkRightClickable, checkSelectable, parseFenBoard } from '../modules/utils';
 
 
 // const boardFenInput = '8/2p5/7p/8/3KK3/8/7Q/8';
@@ -14,18 +14,31 @@ function Home() {
   const [boardData, setBoardData] = useState(parseFenBoard(boardFenInput));
   const [selectedPieceLocation, setSelectedPieceLocation] = useState(null as (SquareLocation | null));
 
-  const onSelectablePieceClick = (clickedLocation: SquareLocation) => {
-    if (selectedPieceLocation?.rankIndex === clickedLocation.rankIndex
-      && selectedPieceLocation?.fileIndex === clickedLocation.fileIndex) {
+  const onSquareClick = (clickedLocation: SquareLocation) => {
+    if (
+      selectedPieceLocation?.rankIndex === clickedLocation.rankIndex
+      && selectedPieceLocation?.fileIndex === clickedLocation.fileIndex
+    ) {
+      // clicked again on the selected piece. unselect!
       setSelectedPieceLocation(null);
-    } else {
+    } else if (checkSelectable(clickedLocation, boardData)) {
+      // clicked on another selectable piece. select!
       setSelectedPieceLocation(clickedLocation);
+    } else {
+      // clicked on empty square, do nothing
     }
   };
 
-  const onPieceMove = (moveTarget: SquareLocation) => {
-    if (selectedPieceLocation === null) { return; }
-
+  const onRightClick = (moveTarget: SquareLocation) => {
+    if (selectedPieceLocation === null) {
+      // cannot move if there is no selection
+      return;
+    }
+    if (!checkRightClickable(moveTarget, boardData, selectedPieceLocation)) {
+      // cannot move if we clicked on the invalid target square
+      return;
+    }
+    // if we are here a valid move has been made, so apply it
     setBoardData(
       calculateBoardDataAfterMove(boardData, selectedPieceLocation, moveTarget)
     );
@@ -37,8 +50,8 @@ function Home() {
       <Chessboard
         boardData={boardData}
         selectedPieceLocation={selectedPieceLocation}
-        onSelectablePieceClick={onSelectablePieceClick}
-        onPieceMove={onPieceMove}
+        onSquareClick={onSquareClick}
+        onRightClick={onRightClick}
         boardOrientation={boardOrientation}
       />
       <div>

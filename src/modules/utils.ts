@@ -64,7 +64,12 @@ export const checkSelectable = ({ rankIndex, fileIndex }: SquareLocation, boardD
   }
 }
 
-export const checkRightClickable = ({ rankIndex, fileIndex }: SquareLocation, boardData: (Piece | null)[][], selectedPieceLocation: SquareLocation | null): boolean => {
+export const checkRightClickable = (
+  { rankIndex, fileIndex }: SquareLocation,
+  boardData: (Piece | null)[][],
+  selectedPieceLocation: SquareLocation | null
+): boolean => {
+  
   if (selectedPieceLocation === null) {
     return false;
   }
