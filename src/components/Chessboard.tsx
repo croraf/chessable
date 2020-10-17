@@ -57,6 +57,7 @@ const Chessboard = ({
               const isMoveTarget = checkRightClickable({ rankIndex, fileIndex }, boardData, selectedPieceLocation);
               return (
                 <Square
+                  key={fileIndex}
                   containedPiece={piece}
                   isWhite={(rankIndex + fileIndex) % 2 === 1}
                   isSelected={isSelected}
