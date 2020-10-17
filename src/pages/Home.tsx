@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 import Chessboard from '../components/Chessboard';
 import { BoardOrientation, SquareLocation } from '../types/basicTypes';
-import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { addWhitePawnToBoard, calculateBoardDataAfterMove, checkRightClickable, checkSelectable, parseFenBoard } from '../modules/utils';
+import ButtonsRow from '../components/ButtonsRow';
 
 
 // const boardFenInput = '8/2p5/7p/8/3KK3/8/7Q/8';
 const boardFenInput = '8/2p5/8/8/8/8/8/8';
 
 
+const useStyles = makeStyles({
+  root: {
+    margin: '2rem 0rem',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+});
+
+
 function Home() {
+  const classes = useStyles();
   const [boardOrientation, setBoardOrientation] = useState(BoardOrientation.WHITE);
   const [boardData, setBoardData] = useState(parseFenBoard(boardFenInput));
   const [selectedPieceLocation, setSelectedPieceLocation] = useState(null as (SquareLocation | null));
@@ -34,19 +47,20 @@ function Home() {
       // cannot move if there is no selection
       return;
     }
-    if (!checkRightClickable(moveTarget, boardData, selectedPieceLocation)) {
-      // cannot move if we clicked on the invalid target square
-      return;
+
+    if (checkRightClickable(moveTarget, boardData, selectedPieceLocation)) {
+      // a valid move has been made. apply it!
+      setBoardData(
+        calculateBoardDataAfterMove(boardData, selectedPieceLocation, moveTarget)
+      );
+      setSelectedPieceLocation(null);
+    } else {
+      // an invalid move has been made. do nothing!
     }
-    // if we are here a valid move has been made, so apply it
-    setBoardData(
-      calculateBoardDataAfterMove(boardData, selectedPieceLocation, moveTarget)
-    );
-    setSelectedPieceLocation(null);
   };
 
   return (
-    <div style={{ margin: '2rem 0rem', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+    <div className={classes.root}>
       <Chessboard
         boardData={boardData}
         selectedPieceLocation={selectedPieceLocation}
@@ -54,28 +68,13 @@ function Home() {
         onRightClick={onRightClick}
         boardOrientation={boardOrientation}
       />
-      <div>
-        <Button
-          onClick={e => setBoardOrientation(
-            boardOrientation === BoardOrientation.WHITE ? BoardOrientation.BLACK : BoardOrientation.WHITE
-          )}
-          style={{ margin: '1rem', }}
-        >
-          Rotate
-        </Button>
-        <Button
-          onClick={e => setBoardData(addWhitePawnToBoard(boardData))}
-          style={{ margin: '1rem', }}
-        >
-          Spawn a white pawn
-        </Button>
-        <Button
-          onClick={e => setBoardData(parseFenBoard(boardFenInput))}
-          style={{ margin: '1rem', }}
-        >
-          Reset
-        </Button>
-      </div>
+      <ButtonsRow
+        rotateButtonClick={() => setBoardOrientation(
+          boardOrientation === BoardOrientation.WHITE ? BoardOrientation.BLACK : BoardOrientation.WHITE
+        )}
+        spawnPawnButtonClick={() => setBoardData(addWhitePawnToBoard(boardData))}
+        resetButtonClick={() => setBoardData(parseFenBoard(boardFenInput))}
+      />
     </div>
   );
 }

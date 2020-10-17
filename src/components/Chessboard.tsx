@@ -62,8 +62,8 @@ const Chessboard = ({
                   isSelected={isSelected}
                   isSelectable={isSelectable}
                   isMoveTarget={isMoveTarget}
-                  onRightClick={() => {isMoveTarget && onRightClick({ rankIndex, fileIndex })}}
-                  onSquareClick={() => {isSelectable && onSquareClick({ rankIndex, fileIndex })}}
+                  onRightClick={() => {onRightClick({ rankIndex, fileIndex })}}
+                  onSquareClick={() => {onSquareClick({ rankIndex, fileIndex })}}
                   boardOrientation={boardOrientation}
                 />
               )

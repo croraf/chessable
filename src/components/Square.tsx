@@ -1,5 +1,5 @@
 import React from 'react';
-import PieceHolder from './PieceHolder';
+import PieceRenderer from './PieceRenderer';
 import cx from 'classnames';
 import { BoardOrientation, Piece } from '../types/basicTypes';
 import { makeStyles } from '@material-ui/core';
@@ -67,7 +67,7 @@ const Square = ({
       onClick={onSquareClick}
       onContextMenu={onRightClick}
     >
-      {containedPiece !== null && <PieceHolder pieceData={containedPiece} />}
+      {containedPiece !== null && <PieceRenderer pieceData={containedPiece} />}
     </div>
   );
 };

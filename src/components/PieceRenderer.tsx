@@ -1,7 +1,7 @@
 import React from 'react';
 import { PieceColor, Piece } from '../types/basicTypes';
 
-const PieceHolder = ({ pieceData, }: { pieceData: Piece, }) => {
+const PieceRenderer = ({ pieceData, }: { pieceData: Piece, }) => {
 
   return (
     <div
@@ -22,4 +22,4 @@ const PieceHolder = ({ pieceData, }: { pieceData: Piece, }) => {
   );
 };
 
-export default PieceHolder;
+export default PieceRenderer;
