@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Chessboard from "../features/chess/Chessboard";
-import { BoardOrientation, SquareLocation } from "../features/chess/chessTypes";
+import { BoardOrientation, SquareLocation } from "../features/chess/types";
 import { makeStyles } from "@material-ui/core";
 import {
   addWhitePawnToBoard,
