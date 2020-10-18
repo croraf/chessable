@@ -6,8 +6,8 @@ import { checkRightClickable, checkSelectable } from "./chessUtils";
 
 const useStyles = makeStyles({
   root: {
-    width: "600px",
-    height: "600px",
+    width: "500px",
+    height: "500px",
     margin: "auto",
     border: "5px solid black",
     transition: "transform 2s"
