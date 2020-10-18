@@ -67,7 +67,7 @@ export const checkSelectable = (
   }
 };
 
-export const checkRightClickable = (
+export const checkIfValidMoveTarget = (
   { rankIndex, fileIndex }: SquareLocation,
   boardData: (Piece | null)[][],
   selectedPieceLocation: SquareLocation | null

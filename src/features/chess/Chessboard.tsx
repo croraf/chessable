@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core";
 import { BoardOrientation, Piece, SquareLocation } from "./types";
 import Square from "./Square";
-import { checkRightClickable, checkSelectable } from "./chessUtils";
+import { checkIfValidMoveTarget, checkSelectable } from "./chessUtils";
 
 const useStyles = makeStyles({
   root: {
@@ -55,7 +55,7 @@ const Chessboard = ({
               { rankIndex, fileIndex },
               boardData
             );
-            const isMoveTarget = checkRightClickable(
+            const isValidMoveTarget = checkIfValidMoveTarget(
               { rankIndex, fileIndex },
               boardData,
               selectedPieceLocation
@@ -67,7 +67,7 @@ const Chessboard = ({
                 isWhite={(rankIndex + fileIndex) % 2 === 1}
                 isSelected={isSelected}
                 isSelectable={isSelectable}
-                isMoveTarget={isMoveTarget}
+                isValidMoveTarget={isValidMoveTarget}
                 onRightClick={() => {
                   onRightClick({ rankIndex, fileIndex });
                 }}

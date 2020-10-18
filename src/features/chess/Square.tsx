@@ -32,7 +32,7 @@ const Square = ({
   isWhite,
   isSelected,
   isSelectable,
-  isMoveTarget,
+  isValidMoveTarget,
   onSquareClick,
   onRightClick,
   boardOrientation
@@ -41,7 +41,7 @@ const Square = ({
   isWhite: boolean;
   isSelected: boolean;
   isSelectable: boolean;
-  isMoveTarget: boolean;
+  isValidMoveTarget: boolean;
   onSquareClick: () => void;
   onRightClick: () => void;
   boardOrientation: BoardOrientation;
@@ -54,7 +54,7 @@ const Square = ({
         classes.square,
         isWhite ? classes.squareWhite : classes.squareBlack,
         isSelected && classes.squareSelected,
-        isMoveTarget && classes.squareMovable
+        isValidMoveTarget && classes.squareMovable
       )}
       style={{
         transform: `

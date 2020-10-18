@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core";
 import {
   addWhitePawnToBoard,
   calculateBoardDataAfterMove,
-  checkRightClickable,
+  checkIfValidMoveTarget,
   checkSelectable,
   parseFenBoard
 } from "../features/chess/chessUtils";
@@ -55,7 +55,7 @@ function Home() {
       return;
     }
 
-    if (checkRightClickable(moveTarget, boardData, selectedPieceLocation)) {
+    if (checkIfValidMoveTarget(moveTarget, boardData, selectedPieceLocation)) {
       // a valid move has been made. apply it!
       setBoardData(
         calculateBoardDataAfterMove(
