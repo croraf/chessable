@@ -45,9 +45,9 @@ const Chessboard = ({
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
-      {boardData.map((rank, rankIndex) => (
+      {boardData.map((rankData, rankIndex) => (
         <div key={rankIndex} className={classes.rank}>
-          {rank.map((piece, fileIndex) => {
+          {rankData.map((squareData, fileIndex) => {
             const isSelected =
               selectedPieceLocation?.rankIndex === rankIndex &&
               selectedPieceLocation?.fileIndex === fileIndex;
@@ -63,7 +63,7 @@ const Chessboard = ({
             return (
               <Square
                 key={fileIndex}
-                containedPiece={piece}
+                containedPiece={squareData}
                 isWhite={(rankIndex + fileIndex) % 2 === 1}
                 isSelected={isSelected}
                 isSelectable={isSelectable}
