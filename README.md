@@ -13,4 +13,4 @@
 
 ## Time spent
 
-9-10 hours.
+10-12 hours.
