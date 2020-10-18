@@ -45,13 +45,13 @@ function Home() {
       // clicked on another selectable piece. select!
       setSelectedPieceLocation(clickedLocation);
     } else {
-      // clicked on empty square, do nothing
+      // clicked on an empty square, do nothing
     }
   };
 
   const onRightClick = (moveTarget: SquareLocation) => {
     if (selectedPieceLocation === null) {
-      // cannot move if there is no selection
+      // cannot move if there is no previous selection
       return;
     }
 
