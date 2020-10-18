@@ -66,7 +66,7 @@ const Square = ({
       onClick={onSquareClick}
       onContextMenu={onRightClick}
     >
-      {containedPiece !== null && <PieceRenderer pieceData={containedPiece} />}
+      {containedPiece !== null && <PieceRenderer piece={containedPiece} />}
     </div>
   );
 };

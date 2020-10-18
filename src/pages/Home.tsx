@@ -80,17 +80,25 @@ function Home() {
         boardOrientation={boardOrientation}
       />
       <ButtonsRow
-        rotateButtonClick={() =>
-          setBoardOrientation(
-            boardOrientation === BoardOrientation.WHITE
-              ? BoardOrientation.BLACK
-              : BoardOrientation.WHITE
-          )
-        }
-        spawnPawnButtonClick={() =>
-          setBoardData(addWhitePawnToBoard(boardData))
-        }
-        resetButtonClick={() => setBoardData(parseFenBoard(boardFenInput))}
+        items={[
+          {
+            label: "Rotate",
+            callback: () =>
+              setBoardOrientation(
+                boardOrientation === BoardOrientation.WHITE
+                  ? BoardOrientation.BLACK
+                  : BoardOrientation.WHITE
+              )
+          },
+          {
+            label: "Spawn a white pawn",
+            callback: () => setBoardData(addWhitePawnToBoard(boardData))
+          },
+          {
+            label: "Reset",
+            callback: () => setBoardData(parseFenBoard(boardFenInput))
+          }
+        ]}
       />
     </div>
   );

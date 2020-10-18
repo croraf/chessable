@@ -1,7 +1,7 @@
 import React from "react";
 import { PieceColor, Piece } from "./chessTypes";
 
-const PieceRenderer = ({ pieceData }: { pieceData: Piece }) => {
+const PieceRenderer = ({ piece }: { piece: Piece }) => {
   return (
     <div
       style={{
@@ -11,12 +11,12 @@ const PieceRenderer = ({ pieceData }: { pieceData: Piece }) => {
         justifyContent: "center",
         alignItems: "center",
         fontSize: "30px",
-        color: pieceData.color === PieceColor.WHITE ? "white" : "black",
+        color: piece.color === PieceColor.WHITE ? "white" : "black",
         fontWeight: "bold",
         userSelect: "none"
       }}
     >
-      {pieceData.kind.toUpperCase()}
+      {piece.kind.toUpperCase()}
     </div>
   );
 };
