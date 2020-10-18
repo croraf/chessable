@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-import { BoardOrientation, Piece, SquareLocation } from "./chessTypes";
+import { BoardOrientation, Piece, SquareLocation } from "./types";
 import Square from "./Square";
 import { checkRightClickable, checkSelectable } from "./chessUtils";
 

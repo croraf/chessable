@@ -1,5 +1,5 @@
 import React from "react";
-import { PieceColor, Piece } from "./chessTypes";
+import { PieceColor, Piece } from "./types";
 
 const PieceRenderer = ({ piece }: { piece: Piece }) => {
   return (

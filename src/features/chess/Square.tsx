@@ -1,7 +1,7 @@
 import React from "react";
 import PieceRenderer from "./PieceRenderer";
 import cx from "classnames";
-import { BoardOrientation, Piece } from "./chessTypes";
+import { BoardOrientation, Piece } from "./types";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({

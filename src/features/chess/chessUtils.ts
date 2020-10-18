@@ -1,4 +1,4 @@
-import { PieceColor, Piece, PieceKind, SquareLocation } from "./chessTypes";
+import { PieceColor, Piece, PieceKind, SquareLocation } from "./types";
 
 const parseFenRank = (rankInput: string): (Piece | null)[] => {
   let parsedRank: (Piece | null)[] = [];
